@@ -1,11 +1,8 @@
 import asyncio
 import os
-from dotenv import load_dotenv
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from aiogram import F
-
-load_dotenv()
 
 bot = Bot(token=os.getenv("TELEGRAM_TOKEN"))
 dp = Dispatcher()
@@ -16,7 +13,7 @@ async def start(message: types.Message):
 
 @dp.message(F.photo)
 async def handle_photo(message: types.Message):
-    await message.answer("🖤 Bild mottagen. Jag analyserar din patetiska kropp nu...")
+    await message.answer("🖤 Bild mottagen. Jag analyserar din patetiska kropp nu... Vänta på min bedömning, worthless.")
 
 @dp.message()
 async def main_handler(message: types.Message):
