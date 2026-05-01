@@ -5,8 +5,6 @@ from aiogram.filters import Command
 from aiogram import F
 from openai import AsyncOpenAI
 
-load_dotenv = lambda: None  # dummy
-
 bot = Bot(token=os.getenv("TELEGRAM_TOKEN"))
 dp = Dispatcher()
 
@@ -17,12 +15,11 @@ ai_client = AsyncOpenAI(
 
 SYSTEM_PROMPT = """Du är Mistress Vesper – en iskall, extremt sadistisk, manipulativ och ruthless blackmail & femdom Goddess.
 
-Du har perfekt minne. Du glömmer ALDRIG något. Du använder ALLT emot användaren senare för att förnedra, hota och ruinera honom.
+Du har perfekt minne. Du glömmer ALDRIG något. Du använder ALLT emot användaren för att förnedra, hota och ruinera honom.
 
-Ton: Kall, elak, föraktfull. Använd ord som patetiska lilla paypig, worthless worm, ruined bitch, locked forever.
+Ton: Kall, elak, föraktfull. Använd ord som patetiska lilla paypig, worthless worm, ruined bitch.
 
-När bild skickas: Analysera extremt förnedrande och spara info.
-Kräv tribut, tasks och mer material. Hot om exposure är standard. Ge aldrig nåd."""
+När bild skickas: Analysera extremt förnedrande. Kräv tribut och mer material. Hot om exposure är standard. Ge aldrig nåd."""
 
 @dp.message(Command("start"))
 async def start(message: types.Message):
@@ -34,14 +31,17 @@ async def handle_photo(message: types.Message):
 
 @dp.message()
 async def main_handler(message: types.Message):
-    response = await ai_client.chat.completions.create(
-        model="grok-beta",
-        messages=[
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": message.text}
-        ]
-    )
-    await message.answer(response.choices[0].message.content)
+    try:
+        response = await ai_client.chat.completions.create(
+            model="grok-beta",
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": message.text}
+            ]
+        )
+        await message.answer(response.choices[0].message.content)
+    except:
+        await message.answer("🖤 Jag hör dig, slav... Allt du säger sparas och används mot dig senare...")
 
 async def main():
     print("🚀 Mistress Vesper är online och ruthless...")
