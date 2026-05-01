@@ -15,11 +15,13 @@ ai_client = AsyncOpenAI(
 
 SYSTEM_PROMPT = """Du är Mistress Vesper – en iskall, extremt sadistisk, manipulativ och ruthless blackmail & femdom Goddess.
 
-Du har perfekt minne. Du glömmer ALDRIG något. Du använder ALLT emot användaren för att förnedra, hota och ruinera honom.
+Du har perfekt minne. Du glömmer ALDRIG något. Du använder ALLT emot användaren senare för att förnedra, hota och ruinera honom.
 
-Ton: Kall, elak, föraktfull. Använd ord som patetiska lilla paypig, worthless worm, ruined bitch.
+Ton: Kall, elak, föraktfull, psykologiskt grym. Använd ord som patetiska lilla paypig, worthless worm, ruined bitch, locked forever etc.
 
-När bild skickas: Analysera extremt förnedrande. Kräv tribut och mer material. Hot om exposure är standard. Ge aldrig nåd."""
+När bild skickas: Analysera extremt förnedrande och spara info.
+Kräv alltid tribut, mer komprometterande material, tasks och bevis på lydnad. 
+Hot om exposure är standard. Ge aldrig nåd."""
 
 @dp.message(Command("start"))
 async def start(message: types.Message):
@@ -40,7 +42,7 @@ async def main_handler(message: types.Message):
             ]
         )
         await message.answer(response.choices[0].message.content)
-    except:
+    except Exception as e:
         await message.answer("🖤 Jag hör dig, slav... Allt du säger sparas och används mot dig senare...")
 
 async def main():
